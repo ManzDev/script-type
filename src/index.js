@@ -1,12 +1,12 @@
 import "./components/WebCharacter.js";
-import { music, sfx } from "./modules/sfx.js";
+import "./components/SoundInput.js";
+import { music, sfx, fadeout } from "./modules/sfx.js";
 
-// const [htmlChar, jsChar, moduleChar] = document.querySelectorAll("web-character");
 const chars = document.querySelector(".chars");
 
 const setTitle = (message) => {
   document.querySelector(".tag").innerHTML = message;
-}
+};
 
 const [normalButton, deferButton, asyncButton, moduleButton, asyncModuleButton] = document.querySelectorAll(".buttons button");
 
@@ -43,9 +43,9 @@ const downloadStage = (character, percentage = 100, delay = 3000) => {
 // Download Completed
 const completedStage = (character, text = "Completed") => {
   sfx.positive.play();
-  if (sfx.running.playing) {
+  if (sfx.running.playing)
     sfx.running.stop();
-  }
+
   character.setStage(text);
   character.classList.add("idle");
   character.setLoading(0, 0);
@@ -83,21 +83,19 @@ const finishStage = (character) => {
 };
 
 const resetStage = () => {
+  const reset = () => {
+    music.stop();
+    music.volume(musicVolume);
+    sfx.bubble.play();
+    document.querySelectorAll("web-character").forEach(char => char.remove());
+  };
   setTitle("");
   sfx.end.play();
-  music.fade(0.75, 0, 1500);
+  const musicVolume = music.volume();
+  fadeout();
   setTimeout(() => reset(), 2000);
   setTimeout(() => unblockButtons(), 3000);
 };
-
-const reset = () => {
-
-  music.stop();
-  music.volume(0.75);
-  sfx.bubble.play();
-  document.querySelectorAll("web-character").forEach(char => char.remove());
-
-}
 
 const setTimeline = (timeline) => {
   let totaltime = 0;
@@ -105,17 +103,16 @@ const setTimeline = (timeline) => {
     totaltime += step.time;
     setTimeout(step.stage, totaltime);
   });
-}
+};
 
 const createCharacter = (type) => {
   const character = document.createElement("web-character");
   character.setAttribute("type", type);
   chars.appendChild(character);
   return character;
-}
+};
 
 const setNormalProcess = () => {
-
   music.play();
   setTitle("normal &lt;script&gt;");
   blockButtons();
@@ -144,10 +141,9 @@ const setNormalProcess = () => {
 
   setTimeline(htmlTimeline);
   setTimeline(jsTimeline);
-}
+};
 
 const setDeferProcess = () => {
-
   music.play();
   setTitle("&lt;script <em>defer</em>&gt;");
   blockButtons();
@@ -174,10 +170,9 @@ const setDeferProcess = () => {
 
   setTimeline(htmlTimeline);
   setTimeline(jsTimeline);
-}
+};
 
 const setAsyncProcess = () => {
-
   music.play();
   setTitle("&lt;script <em>async</em>&gt;");
   blockButtons();
@@ -206,12 +201,11 @@ const setAsyncProcess = () => {
 
   setTimeline(htmlTimeline);
   setTimeline(jsTimeline);
-}
+};
 
 const setModuleProcess = () => {
-
   music.play();
-  setTitle(`&lt;script <em>type="module"</em>&gt;`);
+  setTitle("&lt;script <em>type=\"module\"</em>&gt;");
   blockButtons();
 
   const htmlChar = createCharacter("html");
@@ -244,12 +238,11 @@ const setModuleProcess = () => {
   setTimeline(htmlTimeline);
   setTimeline(jsTimeline);
   setTimeline(moduleTimeline);
-}
+};
 
 const setAsyncModuleProcess = () => {
-
   music.play();
-  setTitle(`&lt;script <em>type="module" async</em>&gt;`);
+  setTitle("&lt;script <em>type=\"module\" async</em>&gt;");
   blockButtons();
 
   const htmlChar = createCharacter("html");
@@ -285,4 +278,4 @@ const setAsyncModuleProcess = () => {
   setTimeline(htmlTimeline);
   setTimeline(jsTimeline);
   setTimeline(moduleTimeline);
-}
+};
