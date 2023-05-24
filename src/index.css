@@ -1,13 +1,26 @@
 @font-face {
-  font-family: "EnterCommand";
+  font-family: "Montserrat";
   src:
-    url(/entercommand.woff2) format("woff2"),
-    url(/entercommand.woff) format("woff");
+    url(montserrat-vf.woff2) format("woff2"),
+    url(montserrat-vf.woff) format("woff");
   font-display: swap;
 }
 
-body {
+@font-face {
   font-family: "EnterCommand";
+  src:
+    url(entercommand.woff2) format("woff2"),
+    url(entercommand.woff) format("woff");
+  font-display: swap;
+}
+
+:root {
+  --retro-font: "EnterCommand", monospace;
+  --normal-font: "Montserrat", sans-serif;
+}
+
+body {
+  font-family: var(--retro-font);
   font-size: 42px;
   text-shadow: 2px 2px 0 #000;
   color: #fff;
@@ -38,8 +51,7 @@ body {
 
 .buttons button {
   padding: 10px;
-  font-family: "Scope One";
-  font-weight: bold;
+  font-family: var(--normal-font);
   font-size: 16px;
   background: #1283d1;
   border: 0;
@@ -57,9 +69,10 @@ body {
 .buttons button:active {
   color: #888;
   background: #08477a;
-  box-shadow: none;
   transform: translateY(5px);
-  box-shadow: 0 2px 0 #0863a5, 0 3px 3px rgb(0 0 0 / 30%);
+  box-shadow:
+    0 2px 0 #0863a5,
+    0 3px 3px rgb(0 0 0 / 30%);
 }
 
 .chars {
@@ -73,7 +86,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Montserrat";
+  font-family: var(--normal-font);
   font-weight: lighter;
   font-size: 16px;
   text-shadow: none;
@@ -86,7 +99,7 @@ footer {
 }
 
 footer p {
-  margin: 0;
+  margin: 4px 0;
 }
 
 footer a {
